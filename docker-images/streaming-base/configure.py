@@ -21,6 +21,6 @@ def generate_config(template_file, output_file):
 
 if __name__ == '__main__':
   if len(sys.argv) >= 2:
-    template_file = sys.argv[1]
-    output_file = sys.argv[2]
+    template_file = sys.argv[0]
+    output_file = sys.argv[1]
     generate_config(template_file,output_file)
