@@ -16,7 +16,7 @@ ENV ZOOKEEPER_VERSION=${zookeeper_version} \
 ENV PATH=${PATH}:${ZOOKEEPER_HOME}/bin
 
 
-EXPOSE 2181 2888 3888
+EXPOSE 2181
 
 VOLUME ["/var/lib/zookeeper/data"]
 
