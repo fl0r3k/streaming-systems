@@ -1,0 +1,9 @@
+{% set exclude_envs = [
+    'KAFKA_VERSION',
+    'KAFKA_HOME'
+] -%}
+
+{% set kafka_props = env_to_props('KAFKA_', exclude=exclude_envs) -%}
+{% for name, value in kafka_props.items() -%}
+{{name}}={{value}}
+{% endfor -%}
