@@ -1,5 +1,5 @@
 clientPort={{ env['ZOOKEEPER_CLIENT_PORT'] | default(2181) }}
-dataDir=/var/lib/zookeeper/data
+dataDir={{ env['ZOOKEEPER_DATA_DIR'] }}
 dataLogDir=/var/lib/zookeeper/log
 tickTime={{ env['ZOOKEEPER_TICK_TIME'] | default(2000) }}
 
