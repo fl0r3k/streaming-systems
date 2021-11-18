@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+
+  zookeeper-1:
+    image: fl0r3k/zookeeper:3.6.3
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 12181
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper-1:12888:13888;zookeeper-2:22888:23888;zookeeper-3:32888:33888
+
+  zookeeper-2:
+    image: fl0r3k/zookeeper:3.6.3
+    environment:
+      ZOOKEEPER_SERVER_ID: 2
+      ZOOKEEPER_CLIENT_PORT: 22181
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper-1:12888:13888;zookeeper-2:22888:23888;zookeeper-3:32888:33888
+  
+  zookeeper-3:
+    image: fl0r3k/zookeeper:3.6.3
+    environment:
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper-1:12888:13888;zookeeper-2:22888:23888;zookeeper-3:32888:33888
+
+  kafka-1:
+    image: fl0r3k/kafka:3.0.0
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
+      KAFKA_LISTENERS: CLIENT://localhost:19092,REPLICATION://kafka-1:19093
+      KAFKA_INTER_BROKER_LISTENER_NAME: REPLICATION
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CLIENT:PLAINTEXT,REPLICATION:PLAINTEXT
+    ports:
+      - "19092:19092"
+
+  kafka-2:
+    image: fl0r3k/kafka:3.0.0
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
+      KAFKA_LISTENERS: CLIENT://localhost:29092,REPLICATION://kafka-2:29093
+      KAFKA_INTER_BROKER_LISTENER_NAME: REPLICATION
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CLIENT:PLAINTEXT,REPLICATION:PLAINTEXT
+    ports:
+      - "29092:29092"
+
+  kafka-3:
+    image: fl0r3k/kafka:3.0.0
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
+      KAFKA_LISTENERS: CLIENT://localhost:39092,REPLICATION://kafka-3:39093
+      KAFKA_INTER_BROKER_LISTENER_NAME: REPLICATION
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CLIENT:PLAINTEXT,REPLICATION:PLAINTEXT
+    ports:
+      - "39092:39092"
