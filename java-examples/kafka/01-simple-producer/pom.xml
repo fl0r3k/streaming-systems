@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fl0r3k</groupId>
-    <artifactId>01-basic-producer</artifactId>
-    <version>1.0</version>
+    <artifactId>01-simple-producer</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
